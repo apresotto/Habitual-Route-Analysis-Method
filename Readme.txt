@@ -1,0 +1,64 @@
+Habitual Route Analysis Method (HRAM)
+Overview
+
+This tool automates the analysis method to evaluate the existence of habitual routes present within navigational data. A habitual route is based on the animal uses of  repeated routes and route segments. The constantly repetition of segments comprising the habitual route an animal use during a period of time. 
+HRAM identifies repeated route and route segments. It uses the daily travel vector to identify route repetitions. A route is the sequence of geographic coordinates by day. Thus, the input data is a line shapefile.
+The script begins by accepting daily routes organized by month. These daily routes are combined to create monthly routes. The tool isolates each daily route and converts it into a buffered zone based on the species’ sight range. Each daily route’s buffer is compared to the other monthly routes. When a route from another month intersects a daily route’s buffer, it is considered repeated. For example, if you are looking at April 1st’s route and May 2nd, July 31st, and January 4th are intersecting the buffer then April 1st is repeated three times. 
+The tool outputs two shapefiles for every month, one file with the month name, for example “april” which is the daily route and the attribute table shows how many times each daily routes was repeated. Another output is a shapefile for each month, which carry the name of the month plus segments. For example, for April the shapefile would be called “april_segments” which produces a attribute table with shows two fields: DAYNUM is the day the route was used and the REPEATED the day  that route was repeated or the name of the route in the month which was buffered along with the name of each route that intersects its buffer.
+Sight Range
+This sight range is user input within the code since it varies based on the species and their environment. The unit of measurement is based on the input shapefile’s projection unit. For instance, if the inputted data is projected using NAD83(CSRS) / UTM zone 20N then the unit of measurement will be in meters. If the user inputs “300”, it will be used as “300 meters” for the sight range.
+
+Getting Started
+The following instructions will aid in the execution of this tool for your own data. The script is open source and does not require any proprietary data. 
+*Note* 
+As the open source software changes, alterations to this script and readme file may occur. 
+
+Prerequisites
+1.  Install Postgres -Postgres
+a. The above link is the path to download the software necessary. 
+b. Select the following from the corresponding drop down lists 
+i. Select your product > EDB Postgres Standard
+ii. Select your version > PostgreSQL 9.5.15
+iii. Select your operating system > Windows x86-64 OR Windows x86-32
+iv. Click ‘Download’
+c.  Follow the login to download or create an account
+d. Click on the downloaded .exe file 
+e. Accept the defaults when prompted for file locations.
+f. Enter a password and username (case sensitive)
+g. Continue to accept the defaults and install the software
+h. Select ‘PostgreSQL 9.5 (x64) on port 5432’
+i. When prompted to select the application you wish to install
+Select Spatial Extensions > PostGIS 2.5 Bundle for postgreSQL 9.5(64 bit) v 2.5.1
+2. Data Organizational Structure
+ . Data must be organized within one folder which contains monthly folders. These monthly folders should contain the daily routes in shapefile format. Example : 2007 ? April ? April 1st, April 2nd, etc.
+a. Data input structure influences the quality of the output.
+3. SRID Website - http://spatialreference.org/
+a. You will need the SRID for your projected data. You can search your projection using this website.
+b. When prompted for SRID within the code, you will need the corresponding SRID for your projections.
+
+HRAM Execution
+1. Open Python Idle
+a. In the Window’s search pane, type “Idle”. 
+*Note if multiple instances of Python are installed to the computer, ensure that you are using the Python 2.7.
+
+2. In the Python Idle, use file > open to navigate to the HRAM.py file that was downloaded.
+3. Once you have the HRAM file opened, click Run > Run Module and enter the prompted inputs.
+a. The path to your data
+b. The SRID
+c. The band distance 
+d. The password you have created to your postgres
+e. The bin folder location of postgres, which normally can be found in Program Files > PostgresSQL > 9.5 > bin 
+
+Built With
+* OS Library - Operating system commands 
+* PsycoPg2 - More information on PsycoPg2
+
+Authors
+* Caitlin Curry - Developer of HRAM - Caitlin.curry.c@gmail.com
+* Andrea Presotto - apresotto@gmail.com 
+
+Acknowledgments
+* Noah Krach
+* GIS Management Master Program
+* Salisbury University
+
